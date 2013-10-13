@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Story {
 	
+	//FIXME which fields does a story have?
+	
 	String title;
 	
 	List<String> pictures;
