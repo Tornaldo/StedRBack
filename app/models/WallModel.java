@@ -16,6 +16,7 @@ import play.db.ebean.Model;
 @Entity
 @Table(name="wall")
 public class WallModel extends Model {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long wallId;
@@ -33,5 +34,12 @@ public class WallModel extends Model {
 	
 	public static List<WallModel> findAll() {
 		return find.findList();
+	}
+	
+	public static List<WallModel> findWallsOnArea(Double startLatitude, Double startLongitude, Double stopLatitude, Double stopLongitude) {
+		return find.where()
+			.between("latitude", startLatitude, stopLatitude)
+			.between("longitude", startLongitude, stopLongitude)
+			.findList();
 	}
 }
