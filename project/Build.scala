@@ -13,7 +13,8 @@ object ApplicationBuild extends Build {
   	"postgresql" % "postgresql" % "9.1-901.jdbc4",
     javaCore,
     javaJdbc,
-    javaEbean
+    javaEbean,
+    "org.jsoup" % "jsoup" % "1.6.3"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
