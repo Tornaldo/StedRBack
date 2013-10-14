@@ -4,11 +4,13 @@ import java.util.List;
 
 public class Story {
 	
-	//FIXME which fields does a story have?
-	
 	String title;
 	
 	List<String> pictures;
+	
+	List<String> creators;
+
+	List<String> tags;
 
 	public String getTitle() {
 		return title;
@@ -18,6 +20,14 @@ public class Story {
 		return pictures;
 	}
 
+	public List<String> getCreators() {
+		return creators;
+	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -25,7 +35,13 @@ public class Story {
 	public void setPictures(List<String> pictures) {
 		this.pictures = pictures;
 	}
-	
-	
+
+	public void setCreators(List<String> creators) {
+		this.creators = creators;
+	}
+
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
 
 }

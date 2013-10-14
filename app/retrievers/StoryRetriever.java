@@ -44,6 +44,8 @@ public class StoryRetriever {
 				
 				Story story = new Story();
 				List<String> pictures = new ArrayList<String>();
+				List<String> creators = new ArrayList<String>();
+				List<String> tags = new ArrayList<String>();
 
 				Element fields = item.select("fields").first();
 				for (Element field : fields.getAllElements()) {
@@ -53,7 +55,17 @@ public class StoryRetriever {
 							field.tagName().equalsIgnoreCase("abm:videoUri")) {
 						pictures.add(field.ownText());
 					}
+					
+					// save creators/authors
+					if (field.tagName().equalsIgnoreCase("dc:creator")) {
+						creators.add(field.ownText());
+					}
 
+					// save tags
+					if (field.tagName().equalsIgnoreCase("dc:subject")) {
+						tags.add(field.ownText());
+					}
+					
 					// save title
 					if (field.tagName().equals("dc:title")) {
 						story.setTitle(field.ownText());
@@ -63,6 +75,16 @@ public class StoryRetriever {
 				// found any pictures?
 				if (!pictures.isEmpty()) {
 					story.setPictures(pictures);
+				}
+				
+				// found any pictures?
+				if (!creators.isEmpty()) {
+					story.setCreators(creators);
+				}
+				
+				// found any pictures?
+				if (!tags.isEmpty()) {
+					story.setTags(tags);
 				}
 
 				stories.add(story);

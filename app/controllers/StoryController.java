@@ -19,4 +19,12 @@ public class StoryController extends Controller {
 		return ok(Json.toJson(stories));
 	}
 	
+	public static Result listStoriesForWall(Long wallId, Double radius) {
+		WallModel wall = WallModel.find.byId(wallId);
+		
+		List<Story> stories = StoryRetriever.getStoriesOnWall(wall, radius);
+		
+		return ok(Json.toJson(stories));
+	}
+	
 }
