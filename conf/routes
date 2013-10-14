@@ -3,9 +3,7 @@
 # ~~~~
 
 # Home page
-GET /walls.json?:startLat&:startLong&:stopLat&:stopLong     controllers.WallController.listWallsForLocation(startLat: Double, startLong: Double, stopLat: Double, stopLong: Double)
-
-GET /walls.json         controllers.WallController.listAllWalls()
+GET /walls.json        controllers.WallController.listWallsForLocation(startLatitude: Double, startLongitude: Double, stopLatitude: Double, stopLongitude: Double)
 
 GET /stories.json       controllers.StoryController.listStoriesForWall(wallId: Long)
 
