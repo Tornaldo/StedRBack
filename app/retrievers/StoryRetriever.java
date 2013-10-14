@@ -70,6 +70,11 @@ public class StoryRetriever {
 					if (field.tagName().equals("dc:title")) {
 						story.setTitle(field.ownText());
 					}
+					
+					// save category
+					if (field.tagName().equals("abm:category")) {
+						story.setCategory(field.ownText());
+					}
 				}
 
 				// found any pictures?

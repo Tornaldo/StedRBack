@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Story {
 	
+	String category;
+	
 	String title;
 	
 	List<String> pictures;
@@ -44,4 +46,13 @@ public class Story {
 		this.tags = tags;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	
 }
