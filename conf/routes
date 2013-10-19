@@ -8,9 +8,9 @@ GET /places.json                controllers.PlaceController.listAllPlaces()
 GET /places_in_area.json        controllers.PlaceController.listPlacesInArea(startLatitude: Double, startLongitude: Double, stopLatitude: Double, stopLongitude: Double)
 
 # Stories
-GET /stories.json               controllers.StoryController.listStoriesForWall(placeId: String)
+GET /stories.json               controllers.StoryController.listStoriesForPlace(placeId: String)
 
-GET /stories_in_radius.json     controllers.StoryController.listStoriesForWallInRadius(placeId: String, radius: Double)
+GET /stories_in_radius.json     controllers.StoryController.listStoriesForPlaceInRadius(placeId: String, radius: Double)
 
 # Map static resources from the /public folder to the /assets URL path
 GET /assets/*file               controllers.Assets.at(path="/public", file)
