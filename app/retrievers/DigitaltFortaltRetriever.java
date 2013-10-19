@@ -8,18 +8,18 @@ import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
 
 import models.Story;
-import models.WallModel;
+import models.Place;
 
 public class DigitaltFortaltRetriever {
 
 	private static final double DEFAULT_RADIUS = 0.1d;
 	private static final int DEFAULT_ROWS = 500;
 
-	public static List<Story> getStoriesOnWall(WallModel wall) {
+	public static List<Story> getStoriesOnWall(Place wall) {
 		return getStoriesOnWall(wall, DEFAULT_RADIUS);
 	}
 
-	public static List<Story> getStoriesOnWall(WallModel wall, Double radius) {
+	public static List<Story> getStoriesOnWall(Place wall, Double radius) {
 		if (wall == null || radius < 0) {
 			return null;
 		}

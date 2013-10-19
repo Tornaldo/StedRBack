@@ -15,7 +15,7 @@ import play.db.ebean.Model;
 
 @Entity
 @Table(name="wall")
-public class WallModel extends Model {
+public class Place extends Model {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -30,13 +30,13 @@ public class WallModel extends Model {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	public List<Picture> pictures;
 	
-	public static Model.Finder<Long, WallModel> find = new Model.Finder<Long, WallModel>(Long.class, WallModel.class);
+	public static Model.Finder<Long, Place> find = new Model.Finder<Long, Place>(Long.class, Place.class);
 	
-	public static List<WallModel> findAll() {
+	public static List<Place> findAll() {
 		return find.findList();
 	}
 	
-	public static List<WallModel> findWallsOnArea(Double startLatitude, Double startLongitude, Double stopLatitude, Double stopLongitude) {
+	public static List<Place> findWallsOnArea(Double startLatitude, Double startLongitude, Double stopLatitude, Double stopLongitude) {
 		return find.where()
 			.between("latitude", startLatitude, stopLatitude)
 			.between("longitude", startLongitude, stopLongitude)
