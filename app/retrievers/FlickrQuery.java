@@ -61,12 +61,41 @@ public class FlickrQuery {
 				place.owner = element.attr("owner");
 				place.ownerName = element.attr("ownername");
 				place.dateAdded = new Date(TimeUnit.SECONDS.toMillis(dateAddedUnixTimestamp));
+				place.thumbnailUrl = loadPictureUrl(place, apiKey, "t");
+				place.pictureUrl = loadPictureUrl(place, apiKey, "m");
 
 				loadGeoData(place, apiKey);
 
 				return place;
 			}
 		}));
+	}
+
+	private String loadPictureUrl(Place place, String apiKey, String picSize) {
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("http://www.flickr.com/photos/");
+		sb.append(place.owner);
+		sb.append("/");
+		sb.append(place.id);
+		sb.append("/sizes/");
+		sb.append(picSize); // FIXME size externalize
+		sb.append("/in/photostream/");
+
+		Document doc;
+		try {
+			doc = Jsoup.connect(sb.toString()).get();
+
+			Element image = doc.select("div#allsizes-photo img:first-child").get(0);
+			return image.attr("src");
+				
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	private void loadGeoData(Place place, String apiKey) {
@@ -142,14 +171,12 @@ public class FlickrQuery {
 		}
 
 		public Place getById(final String id) {
-			return FluentIterable.<Place>
-				from(places).
-				filter(new Predicate<Place>() {
-					@Override
-					public boolean apply(Place place) {
-						return place.id.equals(id);
-					}}).
-				first().orNull();
+			return FluentIterable.<Place> from(places).filter(new Predicate<Place>() {
+				@Override
+				public boolean apply(Place place) {
+					return place.id.equals(id);
+				}
+			}).first().orNull();
 		}
 
 	}

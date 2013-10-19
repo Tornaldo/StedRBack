@@ -19,4 +19,8 @@ public class Place {
 	
 	public Date dateAdded;
 	
+	public String pictureUrl;
+	
+	public String thumbnailUrl;
+	
 }
