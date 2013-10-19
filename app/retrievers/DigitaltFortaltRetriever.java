@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 import models.Story;
 import models.WallModel;
 
-public class StoryRetriever {
+public class DigitaltFortaltRetriever {
 
 	private static final double DEFAULT_RADIUS = 0.1d;
 	private static final int DEFAULT_ROWS = 500;

@@ -21,3 +21,6 @@ server.pid
 *.iml
 *.eml
 /bin
+/.target
+/.target
+/.target
