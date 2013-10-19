@@ -8,6 +8,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
 
+import com.google.common.base.Objects;
+
 import services.StoryService;
 import models.Story;
 import models.Place;
@@ -44,52 +46,86 @@ public class DigitaltFortaltRetriever implements StoryService {
 				
 				Story story = new Story();
 				List<String> pictures = new ArrayList<String>();
-				List<String> creators = new ArrayList<String>();
+				List<String> videos = new ArrayList<String>();
 				List<String> tags = new ArrayList<String>();
 
 				Element fields = item.select("fields").first();
 				for (Element field : fields.getAllElements()) {
 
+					// story iself
+					
+					// save title
+					if (field.tagName().equals("dc:title")) {
+						story.title = field.ownText();
+					}
+					
+					// save ingress
+					if (field.tagName().equals("abm:introduction")) {
+						story.title = story.title + field.ownText() + " ";
+					}
+					
+					// save fortelling
+					if (field.tagName().equals("dc:description")) {
+						story.title = field.ownText();
+					}
+					
+					// pictures and videos
+
 					// save pictures
-					if (field.tagName().equalsIgnoreCase("abm:imageUri") ||
-							field.tagName().equalsIgnoreCase("abm:videoUri")) {
+					if (field.tagName().equalsIgnoreCase("abm:imageUri")) {
 						pictures.add(field.ownText());
 					}
 					
-					// save creators/authors
-					if (field.tagName().equalsIgnoreCase("dc:creator")) {
-						creators.add(field.ownText());
+					// save videos
+					if (field.tagName().equalsIgnoreCase("abm:videoUri")) {
+						videos.add(field.ownText());
 					}
-
+					
+					// creator and institution
+					
+					// save author
+					// taking the first creator only
+					if (field.tagName().equalsIgnoreCase("dc:creator") && story.author == null) {
+						story.author = field.ownText();
+					}
+					
+					// save institution
+					// taking the second or other creator
+					if (field.tagName().equalsIgnoreCase("dc:creator") && story.author != null) {
+						story.author = field.ownText();
+					}
+					
+					// filtering attributes
+					
 					// save tags
 					if (field.tagName().equalsIgnoreCase("dc:subject")) {
 						tags.add(field.ownText());
 					}
-					
-					// save title
-					if (field.tagName().equals("dc:title")) {
-						story.setTitle(field.ownText());
+
+					// save language
+					if (field.tagName().equalsIgnoreCase("dc:language")) {
+						story.language = field.ownText();
 					}
 					
 					// save category
 					if (field.tagName().equals("abm:category")) {
-						story.setCategory(field.ownText());
+						story.category = field.ownText();
 					}
 				}
 
 				// found any pictures?
 				if (!pictures.isEmpty()) {
-					story.setPictures(pictures);
+					story.pictures = pictures;
 				}
 				
-				// found any pictures?
-				if (!creators.isEmpty()) {
-					story.setCreators(creators);
+				// found any videos?
+				if (!videos.isEmpty()) {
+					story.videos = videos;
 				}
 				
 				// found any pictures?
 				if (!tags.isEmpty()) {
-					story.setTags(tags);
+					story.tags = tags;
 				}
 
 				stories.add(story);
