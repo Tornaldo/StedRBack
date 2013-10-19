@@ -87,7 +87,7 @@ public class FlickrQuery {
 		try {
 			doc = Jsoup.connect(sb.toString()).get();
 
-			Element image = doc.select("div#allsizes-photo img:first-child").get(0);
+			Element image = doc.select("div#allsizes-photo img").get(0);
 			return image.attr("src");
 				
 		} catch (IOException e) {
