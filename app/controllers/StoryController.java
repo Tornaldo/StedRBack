@@ -17,7 +17,7 @@ public class StoryController extends Controller {
 	
 	//FIXME instantiate services, got guice?
 
-	public static Result listStoriesForWall(String placeId) {
+	public static Result listStoriesForPlace(String placeId) {
 		StoryService storyService = new DigitaltFortaltRetriever();
 		PlaceService placeService = new FlickrRetriever();
 		
@@ -28,7 +28,7 @@ public class StoryController extends Controller {
 		return ok(Json.toJson(stories));
 	}
 	
-	public static Result listStoriesForWallInRadius(String placeId, Double radius) {
+	public static Result listStoriesForPlaceInRadius(String placeId, Double radius) {
 		StoryService storyService = new DigitaltFortaltRetriever();
 		PlaceService placeService = new FlickrRetriever();
 		
