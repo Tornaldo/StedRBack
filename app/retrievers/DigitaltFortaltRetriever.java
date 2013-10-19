@@ -1,26 +1,24 @@
 package retrievers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
 
+import services.StoryService;
 import models.Story;
 import models.Place;
 
-public class DigitaltFortaltRetriever {
+public class DigitaltFortaltRetriever implements StoryService {
 
 	private static final double DEFAULT_RADIUS = 0.1d;
 	private static final int DEFAULT_ROWS = 500;
 
-	public static List<Story> getStoriesOnWall(Place wall) {
-		return getStoriesOnWall(wall, DEFAULT_RADIUS);
-	}
-
-	public static List<Story> getStoriesOnWall(Place wall, Double radius) {
-		if (wall == null || radius < 0) {
+	public List<Story> getStoriesForPlace(Place place, Double radius) {
+		if (place == null || radius < 0) {
 			return null;
 		}
 
@@ -30,7 +28,7 @@ public class DigitaltFortaltRetriever {
 			Document doc = Jsoup.connect("" + 
 					"http://kulturnett2.delving.org/organizations/kulturnett/api/search?" + 
 					"query=*:*&" + 
-					"pt=" + wall.latitude + "," + wall.longitude + "&" + 
+					"pt=" + place.latitude + "," + place.longitude + "&" + 
 					"d=" + radius + "&" + 
 					"format=xml&" + 
 					"rows=" + DEFAULT_ROWS + "&" + 
@@ -41,6 +39,8 @@ public class DigitaltFortaltRetriever {
 
 			// each element is a story
 			for (Element item : items) {
+				
+				//FIXME revise fields
 				
 				Story story = new Story();
 				List<String> pictures = new ArrayList<String>();
@@ -102,6 +102,11 @@ public class DigitaltFortaltRetriever {
 		}
 
 		return null;
+	}
+	
+	@Override
+	public Collection<Story> getStoriesForPlace(Place place) {
+		return getStoriesForPlace(place, DEFAULT_RADIUS);
 	}
 
 }

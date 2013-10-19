@@ -1,45 +1,22 @@
 package models;
 
-import java.util.List;
+import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-import play.db.ebean.Model;
-
-@Entity
-@Table(name="wall")
-public class Place extends Model {
+public class Place {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Long wallId;
+	public String id;
+	
+	public String owner;
+	
+	public String ownerName;
+	
+	public String title;
 	
 	public Double latitude;
 	
 	public Double longitude;
 	
-	public String name;
+	public Date dateAdded;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	public List<Picture> pictures;
-	
-	public static Model.Finder<Long, Place> find = new Model.Finder<Long, Place>(Long.class, Place.class);
-	
-	public static List<Place> findAll() {
-		return find.findList();
-	}
-	
-	public static List<Place> findWallsOnArea(Double startLatitude, Double startLongitude, Double stopLatitude, Double stopLongitude) {
-		return find.where()
-			.between("latitude", startLatitude, stopLatitude)
-			.between("longitude", startLongitude, stopLongitude)
-			.findList();
-	}
 }

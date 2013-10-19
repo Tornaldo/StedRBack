@@ -3,14 +3,14 @@
 # ~~~~
 
 # Walls
-GET /walls.json      controllers.WallController.listAllWalls()
+GET /places.json                controllers.PlaceController.listAllPlaces()
 
-GET /wallsbylocation.json         controllers.WallController.listWallsForLocation(startLatitude: Double, startLongitude: Double, stopLatitude: Double, stopLongitude: Double)
+GET /places_in_area.json        controllers.PlaceController.listPlacesInArea(startLatitude: Double, startLongitude: Double, stopLatitude: Double, stopLongitude: Double)
 
 # Stories
-GET /stories.json       controllers.StoryController.listStoriesForWall(wallId: Long)
+GET /stories.json               controllers.StoryController.listStoriesForWall(wallId: Long)
 
-GET /storiesinradius.json       controllers.StoryController.listStoriesForWallInRadius(wallId: Long, radius: Double)
+GET /stories_in_radius.json     controllers.StoryController.listStoriesForWallInRadius(wallId: Long, radius: Double)
 
 # Map static resources from the /public folder to the /assets URL path
-GET /assets/*file       controllers.Assets.at(path="/public", file)
+GET /assets/*file               controllers.Assets.at(path="/public", file)
