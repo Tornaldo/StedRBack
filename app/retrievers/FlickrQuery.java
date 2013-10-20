@@ -27,8 +27,6 @@ public class FlickrQuery {
 	private static final String STEDR_GROUP_ID = "2297124%40N25"; // escaped
 	private static final String FLICKR_API_URL = "http://api.flickr.com/services/rest/?method=";
 
-	//TODO implements taggs
-
 	private FlickrQuery() {
 		// private to discourage instantiation
 	}
