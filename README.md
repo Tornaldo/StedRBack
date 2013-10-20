@@ -3,17 +3,20 @@ StedR (server)
 
 A *Play* application to be run on a *Heroku* instance, or a similar service. One running instance available at http://stedr.herokuapp.com. Provides data using methods described below.
 
-All Places
-----------
+API Methods
+-----------
+
+### All Places
+
 Returns all the places available.
 
     /places.json
 
-Places in area
---------------
+### Places in area
+
 Area defined as a rectangle on a map. Assuming a Mercator-projection map like Google Maps are using.
   
-    /places_in_area.json?startLatitude=63.42&startLongitude=10.39&stopLatitude=63.43&stopLongitude=10.45
+    /places_in_area.json?startLatitude=63.397&startLongitude=10.305&stopLatitude=63.454&stopLongitude=10.492
 
 Where `startLatitude` is the the latitude of the west (i.e. left) border of the bounding box, `stopLatitude` is the east (i.e. right) border, `startLongitude` is the south (i.e. bottom) border and `stopLongitude` is the north (i.e. top) border of the bounding box. 
 
@@ -26,8 +29,8 @@ All latitudes and longitudes are given in DD ([Decimal Degrees](http://en.wikipe
 
 This means **New York City** has a positive latitude and negative longitude, while **Rio de Janeiro** has both values negative and **Tokyo** (or most of the Europe) both values positive.
 
-Stories for a place
--------------------
-Returns all stories that are in radius of 100 meters from the Place identified by the id.
+### Stories
+
+Returns all stories that are in radius of 100 meters from the Place identified by the passed `placeId`.
 
     http://stedr.herokuapp.com/stories.json?placeId=10357336336
