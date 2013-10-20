@@ -9,7 +9,6 @@ import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
 
 import com.google.common.base.Objects;
-import com.google.common.net.UrlEscapers;
 
 import services.StoryService;
 import models.Story;
@@ -17,12 +16,11 @@ import models.Place;
 
 public class DigitaltFortaltRetriever implements StoryService {
 
-	private static final String CONTENT_PROVIDER_VALUE = "Digitalt fortalt";
 	private static final double DEFAULT_RADIUS = 0.1d;
 	private static final int DEFAULT_ROWS = 500;
 
 	public List<Story> getStoriesForPlace(Place place, Double radius) {
-		if (place == null || place.latitude == null || place.longitude == null || radius < 0) {
+		if (place == null || radius < 0) {
 			return null;
 		}
 
@@ -36,13 +34,15 @@ public class DigitaltFortaltRetriever implements StoryService {
 					"d=" + radius + "&" + 
 					"format=xml&" + 
 					"rows=" + DEFAULT_ROWS + "&" + 
-					"qf=abm_contentProvider_facet:" + UrlEscapers.urlFormParameterEscaper().escape(CONTENT_PROVIDER_VALUE))
+					"qf=abm_contentProvider_facet:Digitalt+fortalt")
 					.get();
 
 			Elements items = doc.select("item");
 
 			// each element is a story
 			for (Element item : items) {
+				
+				//FIXME revise fields
 				
 				Story story = new Story();
 				List<String> pictures = new ArrayList<String>();
@@ -134,7 +134,7 @@ public class DigitaltFortaltRetriever implements StoryService {
 			return stories;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			//FIXME logging
 		}
 
 		return null;
