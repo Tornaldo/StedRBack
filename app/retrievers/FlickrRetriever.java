@@ -16,11 +16,9 @@ public class FlickrRetriever implements PlaceService {
 		try {
 			return FlickrQuery.create().call(FLICKR_API_KEY).getPlaces();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -29,7 +27,6 @@ public class FlickrRetriever implements PlaceService {
 		try {
 			return FlickrQuery.create().call(FLICKR_API_KEY).getById(id);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -37,20 +34,18 @@ public class FlickrRetriever implements PlaceService {
 	}
 
 	@Override
-	public Collection<Place> getPlacesInRadius(Double lng, Double lat, Double radius) {
+	public Collection<Place> getPlacesInRadius(Double lat, Double lng, Double radius) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Collection<Place> getPlacesInArea(Double lngBL, Double latBL, Double lngTR, Double latTR) {
+	public Collection<Place> getPlacesInArea(Double latBL, Double lngBL, Double latTR, Double lngTR) {
 		try {
-			return FlickrQuery.create().call(FLICKR_API_KEY).inArea(lngBL, latBL, lngTR, latTR).getPlaces();
+			return FlickrQuery.create().call(FLICKR_API_KEY).inArea(latBL, lngBL, latTR, lngTR).getPlaces();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// TODO Auto-generated method stub
 		return null;
 	}
 

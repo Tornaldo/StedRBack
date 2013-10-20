@@ -153,7 +153,7 @@ public class FlickrQuery {
 			return this;
 		}
 
-		public FlickrQueryResult inArea(final double lngBL, final double latBL, final double lngTR, final double latTR) {
+		public FlickrQueryResult inArea(final double latBL, final double lngBL, final double latTR, final double lngTR) {
 			places = Collections2.filter(places, new Predicate<Place>() {
 
 				@Override

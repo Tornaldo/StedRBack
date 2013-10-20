@@ -15,8 +15,6 @@ import services.StoryService;
 
 public class StoryController extends Controller {
 	
-	//FIXME instantiate services, got guice?
-
 	public static Result listStoriesForPlace(String placeId) {
 		StoryService storyService = new DigitaltFortaltRetriever();
 		PlaceService placeService = new FlickrRetriever();

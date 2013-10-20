@@ -6,12 +6,12 @@ import models.Place;
 
 public interface PlaceService {
 	
-	public Collection<Place> getAllPlaces();
+	Collection<Place> getAllPlaces();
 	
-	public Place findPlaceById(String id);
+	Place findPlaceById(String id);
 	
-	public Collection<Place> getPlacesInRadius(Double lng, Double lat, Double radius);
+	Collection<Place> getPlacesInRadius(Double lat, Double lng, Double radius);
 	
-	public Collection<Place> getPlacesInArea(Double lngBL, Double latBL, Double lngTR, Double latTR);
+	Collection<Place> getPlacesInArea(Double latBL, Double lngBL, Double latTR, Double lngTR);
 
 }

@@ -1,7 +1,6 @@
 package controllers;
 
 import java.util.Collection;
-import java.util.List;
 
 import models.Place;
 import play.libs.Json;
@@ -13,16 +12,16 @@ import services.PlaceService;
 public class PlaceController extends Controller {
 
 	public static Result listAllPlaces() {
-		PlaceService placeService = new FlickrRetriever(); // FIXME got guice?
+		PlaceService placeService = new FlickrRetriever();
 		Collection<Place> allPlaces = placeService.getAllPlaces();
 
 		return ok(Json.toJson(allPlaces));
 	}
 
-	public static Result listPlacesInArea(Double startLat, Double startLong, Double stopLat, Double stopLong) {
-		PlaceService placeService = new FlickrRetriever(); // FIXME got guice?
-		Collection<Place> placesInArea = placeService.getPlacesInArea(startLong, startLat, stopLong, stopLat);
+	public static Result listPlacesInArea(Double latBL, Double lngBL, Double latTR, Double lngTR) {
+		PlaceService placeService = new FlickrRetriever();
+		Collection<Place> places = placeService.getPlacesInArea(latBL, lngBL, latTR, lngTR);
 
-		return ok(Json.toJson(placesInArea));
+		return ok(Json.toJson(places));
 	}
 }
