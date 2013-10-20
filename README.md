@@ -3,10 +3,16 @@ StedR (server)
 
 A *Play* application to be run on a *Heroku* instance, or a similar service. One running instance available at http://stedr.herokuapp.com. Provides data using methods described below.
 
+Design
+------
+
+There is no database backing up this application. All places are photos retrieved from [flickr](http://www.flickr.com/) and the stories are retrieved from [Digitalt Fortalt](http://digitaltfortalt.no/). For the flickr photo to appear as a place in our application, it needs to be added to [StedR](http://www.flickr.com/groups/2297124@N25/) group on flicker and have the geolocation information filled in.
+
+
 API Methods
 -----------
 
-### All Places
+### Places
 
 Returns all the places available.
 
