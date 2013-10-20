@@ -12,15 +12,44 @@ There is no database backing up this application. All places are photos retrieve
 API Methods
 -----------
 
+All API methods are returning data in JSON format.
+
 ### Places
 
-Returns all the places available.
+For retrieving all places available.
 
     /places.json
 
+Returns a collection of places like this:
+
+    [
+      {
+        "id": "10365419324",
+        "owner": "30804868@N05",
+        "ownerName": "Simon Stastny",
+        "title": "Atlanterhavsveien",
+        "latitude": 63.016799,
+        "longitude": 7.354445,
+        "dateAdded": 1382204661000,
+        "pictureUrl": "http:\/\/farm4.staticflickr.com\/3665\/10365419324_698b0c5132.jpg",
+        "thumbnailUrl": "http:\/\/farm4.staticflickr.com\/3665\/10365419324_698b0c5132_t.jpg"
+      },
+      {
+        "id": "10365389335",
+        "owner": "30804868@N05",
+        "ownerName": "Simon Stastny",
+        "title": "Rotsethornet",
+        "latitude": 62.133544,
+        "longitude": 6.095094,
+        "dateAdded": 1382204661000,
+        "pictureUrl": "http:\/\/farm6.staticflickr.com\/5538\/10365389335_6bd2a47d6b.jpg",
+        "thumbnailUrl": "http:\/\/farm6.staticflickr.com\/5538\/10365389335_6bd2a47d6b_t.jpg"
+      }
+    ]
+
 ### Places in area
 
-Area defined as a rectangle on a map. Assuming a Mercator-projection map like Google Maps are using.
+Returns a collection of places (structure same as above) in an area, where area defined as a rectangle on a map. Assuming a Mercator-projection map like Google Maps are using.
   
     /places_in_area.json?startLatitude=63.397&startLongitude=10.305&stopLatitude=63.454&stopLongitude=10.492
 
