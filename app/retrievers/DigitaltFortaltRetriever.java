@@ -18,7 +18,7 @@ public class DigitaltFortaltRetriever implements StoryService {
 	private static final int DEFAULT_ROWS = 500;
 
 	public List<Story> getStoriesForPlace(Place place, Double radius) {
-		if (place == null || radius < 0) {
+		if (place == null || place.longitude == null || place.latitude == null ||radius < 0) {
 			return null;
 		}
 

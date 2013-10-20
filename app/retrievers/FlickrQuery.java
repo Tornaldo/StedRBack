@@ -35,7 +35,7 @@ public class FlickrQuery {
 		return new FlickrQuery();
 	}
 
-	public FlickrQueryResult call(final String apiKey) throws IOException {
+	public FlickrPlacesResult call(final String apiKey) throws IOException {
 		String methodName = "flickr.groups.pools.getPhotos";
 
 		StringBuffer sb = new StringBuffer();
@@ -53,7 +53,7 @@ public class FlickrQuery {
 
 		Elements photos = doc.select("photo");
 
-		return new FlickrQueryResult(Collections2.transform(photos, new Function<Element, Place>() {
+		return new FlickrPlacesResult(Collections2.transform(photos, new Function<Element, Place>() {
 
 			@Override
 			public Place apply(Element element) {
@@ -133,53 +133,35 @@ public class FlickrQuery {
 
 	}
 
-	public class FlickrQueryResult {
+	public class FlickrPlacesResult {
 
 		//TODO implement radius...
 
 		private Collection<Place> places;
 
-		private FlickrQueryResult(Collection<Place> places) {
+		private FlickrPlacesResult(Collection<Place> places) {
 			this.places = places;
 		}
 
 		public Collection<Place> getPlaces() {
-			return places;
+			// return only those that have location data filled in
+			return Collections2.filter(places, new Place.HasLocation());
 		}
 
-		public FlickrQueryResult inRadius(Double lng, Double Lat, Double radius) {
+		public FlickrPlacesResult inRadius(Double lng, Double Lat, Double radius) {
 			return this;
 		}
 
-		public FlickrQueryResult inArea(final double latBL, final double lngBL, final double latTR, final double lngTR) {
-			places = Collections2.filter(places, new Predicate<Place>() {
-
-				@Override
-				public boolean apply(Place place) {
-
-					if (place.latitude < latBL || place.latitude > latTR) {
-						return false;
-					}
-
-					if (place.longitude < lngBL || place.longitude > lngTR) {
-						return false;
-					}
-
-					return true;
-				}
-
-			});
+		public FlickrPlacesResult inArea(final double latBL, final double lngBL, final double latTR, final double lngTR) {
+			// filter those that are in selected area
+			places = Collections2.filter(places, new Place.IsInArea(latBL, latTR, lngBL, lngTR));
 
 			return this;
 		}
 
 		public Place getById(final String id) {
-			return FluentIterable.<Place> from(places).filter(new Predicate<Place>() {
-				@Override
-				public boolean apply(Place place) {
-					return place.id.equals(id);
-				}
-			}).first().orNull();
+			// return only the place with given id or null
+			return FluentIterable.<Place> from(places).filter(new Place.HasId(id)).first().orNull();
 		}
 	}
 }
