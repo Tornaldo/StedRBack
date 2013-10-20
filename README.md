@@ -26,7 +26,7 @@ Area defined as a rectangle on a map. Assuming a Mercator-projection map like Go
 
 Where `startLatitude` is the the latitude of the west (i.e. left) border of the bounding box, `stopLatitude` is the east (i.e. right) border, `startLongitude` is the south (i.e. bottom) border and `stopLongitude` is the north (i.e. top) border of the bounding box. 
 
-![Map showing bounding box](http://i.imgur.com/QkC3Dj2.png)
+![Map showing bounding box](http://i.imgur.com/GsKoPQZ.png)
 
 All latitudes and longitudes are given in DD ([Decimal Degrees](http://en.wikipedia.org/wiki/Decimal_degrees)). To quote:
 
