@@ -8,8 +8,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
 
-import com.google.common.base.Objects;
-
 import services.StoryService;
 import models.Story;
 import models.Place;
@@ -41,8 +39,6 @@ public class DigitaltFortaltRetriever implements StoryService {
 
 			// each element is a story
 			for (Element item : items) {
-				
-				//FIXME revise fields
 				
 				Story story = new Story();
 				List<String> pictures = new ArrayList<String>();
@@ -134,7 +130,7 @@ public class DigitaltFortaltRetriever implements StoryService {
 			return stories;
 
 		} catch (Exception e) {
-			//FIXME logging
+			e.printStackTrace();
 		}
 
 		return null;

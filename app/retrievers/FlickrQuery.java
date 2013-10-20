@@ -19,6 +19,7 @@ import models.Place;
 
 public class FlickrQuery {
 
+	private static final String STEDR_GROUP_ID = "2297124%40N25"; // escaped
 	private static final String FLICKR_API_URL = "http://api.flickr.com/services/rest/?method=";
 
 	// FIXME implements taggs
@@ -41,8 +42,9 @@ public class FlickrQuery {
 		sb.append("&api_key=");
 		sb.append(apiKey);
 		sb.append("&group_id=");
-		sb.append("2297124%40N25"); // FIXME externalize
+		sb.append(STEDR_GROUP_ID);
 		sb.append("&format=rest");
+		//TODO paging
 
 		Document doc = Jsoup.connect(sb.toString()).get();
 
@@ -80,7 +82,7 @@ public class FlickrQuery {
 		sb.append("/");
 		sb.append(place.id);
 		sb.append("/sizes/");
-		sb.append(picSize); // FIXME size externalize
+		sb.append(picSize);
 		sb.append("/in/photostream/");
 
 		Document doc;
@@ -91,7 +93,6 @@ public class FlickrQuery {
 			return image.attr("src");
 				
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -108,7 +109,7 @@ public class FlickrQuery {
 		sb.append("&api_key=");
 		sb.append(apiKey);
 		sb.append("&&photo_id=");
-		sb.append(place.id); // FIXME externalize
+		sb.append(place.id);
 		sb.append("&format=rest");
 
 		Document doc;
@@ -124,7 +125,6 @@ public class FlickrQuery {
 				place.longitude = Double.valueOf(location.attr("longitude"));
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -178,7 +178,5 @@ public class FlickrQuery {
 				}
 			}).first().orNull();
 		}
-
 	}
-
 }
