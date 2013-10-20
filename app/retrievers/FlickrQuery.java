@@ -19,10 +19,15 @@ import models.Place;
 
 public class FlickrQuery {
 
+	/*
+	 * 500 is maximum for one page, if we need more, we need to use paging.
+	 * See http://www.flickr.com/services/api/explore/flickr.groups.pools.getPhotos for details
+	 */
+	private static final int PAGE_SIZE = 500;
 	private static final String STEDR_GROUP_ID = "2297124%40N25"; // escaped
 	private static final String FLICKR_API_URL = "http://api.flickr.com/services/rest/?method=";
 
-	// FIXME implements taggs
+	//TODO implements taggs
 
 	private FlickrQuery() {
 		// private to discourage instantiation
@@ -44,7 +49,7 @@ public class FlickrQuery {
 		sb.append("&group_id=");
 		sb.append(STEDR_GROUP_ID);
 		sb.append("&format=rest");
-		//TODO paging
+		sb.append("&per_page=" + PAGE_SIZE);
 
 		Document doc = Jsoup.connect(sb.toString()).get();
 
@@ -132,7 +137,7 @@ public class FlickrQuery {
 
 	public class FlickrQueryResult {
 
-		// FIXME implement radius...
+		//TODO implement radius...
 
 		private Collection<Place> places;
 
