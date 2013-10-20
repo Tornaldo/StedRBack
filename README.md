@@ -24,7 +24,7 @@ Area defined as a rectangle on a map. Assuming a Mercator-projection map like Go
   
     /places_in_area.json?startLatitude=63.397&startLongitude=10.305&stopLatitude=63.454&stopLongitude=10.492
 
-Where `startLatitude` is the the latitude of the west (i.e. left) border of the bounding box, `stopLatitude` is the east (i.e. right) border, `startLongitude` is the south (i.e. bottom) border and `stopLongitude` is the north (i.e. top) border of the bounding box. 
+Where `startLongitude` is the the latitude of the west (i.e. left) border of the bounding box, `stopLongitude` is the east (i.e. right) border, `startLatitude` is the south (i.e. bottom) border and `stopLatitude` is the north (i.e. top) border of the bounding box. 
 
 ![Map showing bounding box](http://i.imgur.com/GsKoPQZ.png)
 
