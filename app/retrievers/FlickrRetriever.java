@@ -5,16 +5,14 @@ import java.util.Collection;
 
 import models.Place;
 import services.PlaceService;
+import services.StedrConstrants;
 
 public class FlickrRetriever implements PlaceService {
-
-	// this apikey belongs to: chrisfro@stud.ntnu.no
-	public static final String FLICKR_API_KEY = "cd04f142470e7de7c992b3a3b140f636";
 
 	@Override
 	public Collection<Place> getAllPlaces() {
 		try {
-			return FlickrQuery.create().call(FLICKR_API_KEY).getPlaces();
+			return FlickrQuery.create().call(StedrConstrants.FLICKR_API_KEY).getPlaces();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -25,7 +23,7 @@ public class FlickrRetriever implements PlaceService {
 	@Override
 	public Place findPlaceById(String id) {
 		try {
-			return FlickrQuery.create().call(FLICKR_API_KEY).getById(id);
+			return FlickrQuery.create().call(StedrConstrants.FLICKR_API_KEY).getById(id);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -41,7 +39,7 @@ public class FlickrRetriever implements PlaceService {
 	@Override
 	public Collection<Place> getPlacesInArea(Double latBL, Double lngBL, Double latTR, Double lngTR) {
 		try {
-			return FlickrQuery.create().call(FLICKR_API_KEY).inArea(latBL, lngBL, latTR, lngTR).getPlaces();
+			return FlickrQuery.create().call(StedrConstrants.FLICKR_API_KEY).inArea(latBL, lngBL, latTR, lngTR).getPlaces();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

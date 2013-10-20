@@ -9,8 +9,10 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import retrievers.DigitaltFortaltRetriever;
+import retrievers.FlickrQuery;
 import retrievers.FlickrRetriever;
 import services.PlaceService;
+import services.StedrConstrants;
 import services.StoryService;
 
 public class StoryController extends Controller {
@@ -28,9 +30,11 @@ public class StoryController extends Controller {
 	
 	public static Result listStoriesForPlaceInRadius(String placeId, Double radius) {
 		StoryService storyService = new DigitaltFortaltRetriever();
-		PlaceService placeService = new FlickrRetriever();
 		
-		Place place = placeService.findPlaceById(placeId);
+		Place place = new Place();
+		place.id = placeId;
+		
+		FlickrQuery.loadGeoData(place, StedrConstrants.FLICKR_API_KEY);
 		
 		Collection<Story> stories = storyService.getStoriesForPlace(place, radius);
 		

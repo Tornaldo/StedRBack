@@ -102,7 +102,7 @@ public class FlickrQuery {
 		return null;
 	}
 
-	private void loadGeoData(Place place, String apiKey) {
+	public static void loadGeoData(Place place, String apiKey) {
 		String methodName = "flickr.photos.geo.getLocation";
 
 		StringBuffer sb = new StringBuffer();
