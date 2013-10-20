@@ -14,12 +14,15 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
+import com.google.common.net.UrlEscapers;
 
 import models.Place;
 
 public class FlickrQuery {
 
 	private static final String FLICKR_API_URL = "http://api.flickr.com/services/rest/?method=";
+	
+	private static final String STEDR_GROUP_ID = "2297124@N25";
 
 	// FIXME implements taggs
 
@@ -41,8 +44,9 @@ public class FlickrQuery {
 		sb.append("&api_key=");
 		sb.append(apiKey);
 		sb.append("&group_id=");
-		sb.append("2297124%40N25"); // FIXME externalize
+		sb.append(UrlEscapers.urlFormParameterEscaper().escape(STEDR_GROUP_ID));
 		sb.append("&format=rest");
+		//FIXME paging
 
 		Document doc = Jsoup.connect(sb.toString()).get();
 
