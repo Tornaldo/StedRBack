@@ -19,9 +19,11 @@ public class StoryController extends Controller {
 	
 	public static Result listStoriesForPlace(String placeId) {
 		StoryService storyService = new DigitaltFortaltRetriever();
-		PlaceService placeService = new FlickrRetriever();
 		
-		Place place = placeService.findPlaceById(placeId);
+		Place place = new Place();
+		place.id = placeId;
+		
+		FlickrQuery.loadGeoData(place, StedrConstrants.FLICKR_API_KEY);
 		
 		Collection<Story> stories = storyService.getStoriesForPlace(place);
 		
