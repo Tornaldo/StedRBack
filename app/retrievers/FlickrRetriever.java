@@ -2,26 +2,35 @@ package retrievers;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+
+import models.Place;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
-
-import models.Place;
 import retrievers.flickr.AdditionalDataQuery;
 import retrievers.flickr.PhotoQueryForGroup;
 import services.PlaceService;
 import services.StedrConstants;
 
-public class FlickrRetriever implements PlaceService {
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 
+public class FlickrRetriever implements PlaceService {
+	
+	private static Cache<String, Place> placeCache = CacheBuilder.newBuilder()
+			.expireAfterWrite(1, TimeUnit.HOURS)
+			.maximumSize(2000)
+			.build();
+	
 	@Override
 	public Collection<Place> getAllPlaces() {
-		//TODO caching
-		
 		try {
 			Collection<Place> rawPlaces = new PhotoQueryForGroup(StedrConstants.STEDR_GROUP_ID).getPlaces();
 						
@@ -29,24 +38,22 @@ public class FlickrRetriever implements PlaceService {
 			
 			// load  additional data (licenses, location)
 			for(Place place : rawPlaces) {
-				new AdditionalDataQuery(place).load();
-				places.add(place);
+				places.add(placeCache.get(place.id, new PlaceLoader(place)));
 			}
-			
+
 			// filter out those what do not have compatible license
 			places = Collections2.filter(places, new Place.HasCompatibleLicense());
 			
 			// kick out places without a location
 			places = Collections2.filter(places, new Place.HasLocation());
 			
-			// load picture and thumbnail URLs
-			for(Place place : places) {
-				place.thumbnailUrl = loadPictureUrl(place, "t");
-				place.pictureUrl = loadPictureUrl(place, "m");
-			}
+			//FIXME check license and location before extracting pics
 			
 			return places;
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -71,7 +78,7 @@ public class FlickrRetriever implements PlaceService {
 		return null;
 	}
 	
-	private String loadPictureUrl(Place place, String picSize) {
+	private static String loadPictureUrl(Place place, String picSize) {
 
 		StringBuffer sb = new StringBuffer();
 
@@ -95,5 +102,28 @@ public class FlickrRetriever implements PlaceService {
 		}
 
 		return null;
+	}
+	
+	static class PlaceLoader implements Callable<Place>{
+		
+		private final Place place;
+
+		public PlaceLoader(Place place) {
+			super();
+			this.place = place;
+		}
+
+		@Override
+		public Place call() throws Exception {
+			place.thumbnailUrl = loadPictureUrl(place, "t");
+			place.pictureUrl = loadPictureUrl(place, "m");
+			
+			new AdditionalDataQuery(place).load();
+			
+			System.out.println("reloading place " + place.id);
+			
+			return place;
+		}
+		
 	}
 }
