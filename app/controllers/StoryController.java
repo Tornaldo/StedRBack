@@ -1,7 +1,6 @@
 package controllers;
 
 import java.util.Collection;
-import java.util.List;
 
 import models.Story;
 import models.Place;
@@ -9,10 +8,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import retrievers.DigitaltFortaltRetriever;
-import retrievers.FlickrQuery;
-import retrievers.FlickrRetriever;
-import services.PlaceService;
-import services.StedrConstrants;
+import retrievers.flickr.AdditionalDataQuery;
 import services.StoryService;
 
 public class StoryController extends Controller {
@@ -23,7 +19,7 @@ public class StoryController extends Controller {
 		Place place = new Place();
 		place.id = placeId;
 		
-		FlickrQuery.loadGeoData(place, StedrConstrants.FLICKR_API_KEY);
+		new AdditionalDataQuery(place).load();
 		
 		Collection<Story> stories = storyService.getStoriesForPlace(place);
 		
@@ -36,7 +32,7 @@ public class StoryController extends Controller {
 		Place place = new Place();
 		place.id = placeId;
 		
-		FlickrQuery.loadGeoData(place, StedrConstrants.FLICKR_API_KEY);
+		new AdditionalDataQuery(place).load();
 		
 		Collection<Story> stories = storyService.getStoriesForPlace(place, radius);
 		

@@ -24,6 +24,8 @@ public class Place {
 
 	public String thumbnailUrl;
 	
+	public Integer license;
+	
 	public static class HasId implements Predicate<Place> { 
 		private final String id;
 		
@@ -83,5 +85,27 @@ public class Place {
 			return true;
 		}
 	};
+	
+	public static class HasCompatibleLicense implements Predicate<Place> {
+		@Override
+		public boolean apply(Place place) {
+			// picture does not have coordinates
+			if (place == null || place.license == null) {
+				return false;
+			}
+
+			// FIXME license checks
+			if (place.license == 1) {
+				return false;
+			}
+
+			return true;
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return "id: " + id + ", license: " + license + ", lat: " + latitude + ", long: " + longitude;
+	}
 
 }
