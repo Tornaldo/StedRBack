@@ -115,13 +115,15 @@ public class FlickrRetriever implements PlaceService {
 
 		@Override
 		public Place call() throws Exception {
-			place.thumbnailUrl = loadPictureUrl(place, "t");
-			place.pictureUrl = loadPictureUrl(place, "m");
-			
+			// load license and location
 			new AdditionalDataQuery(place).load();
-			
-			System.out.println("reloading place " + place.id);
-			
+
+			// load pics only if this place is actually valid (costly operation)
+			if (place.license != null && place.longitude != null && place.latitude != null) {
+				place.pictureUrl = loadPictureUrl(place, "m");
+				place.thumbnailUrl = loadPictureUrl(place, "t");
+			}
+
 			return place;
 		}
 		
