@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.Collection;
 
+import com.google.common.collect.Lists;
+
 import models.Place;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -15,6 +17,10 @@ public class PlaceController extends Controller {
 		PlaceService placeService = new FlickrRetriever();
 		Collection<Place> allPlaces = placeService.getAllPlaces();
 
+		if(allPlaces == null) {
+			allPlaces = Lists.newArrayList();
+		}
+		
 		return ok(Json.toJson(allPlaces));
 	}
 
