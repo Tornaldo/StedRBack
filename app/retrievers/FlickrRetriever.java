@@ -17,6 +17,7 @@ import retrievers.flickr.PhotoQueryForGroup;
 import services.PlaceService;
 import services.StedrConstants;
 
+import com.google.common.base.Stopwatch;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Collections2;
@@ -117,11 +118,16 @@ public class FlickrRetriever implements PlaceService {
 		public Place call() throws Exception {
 			// load license and location
 			new AdditionalDataQuery(place).load();
-
+			
 			// load pics only if this place is actually valid (costly operation)
-			if (place.license != null && place.longitude != null && place.latitude != null) {
+			if (place.hasCompatibleLicense() && place.hasLocation()) {
+				// FIXME remove stopwatch
+				Stopwatch stopwatch = new Stopwatch();
+				stopwatch.start();
 				place.pictureUrl = loadPictureUrl(place, "m");
 				place.thumbnailUrl = loadPictureUrl(place, "t");
+				stopwatch.stop();
+				System.out.println("pics: " + stopwatch);
 			}
 
 			return place;
