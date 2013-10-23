@@ -21,6 +21,7 @@ import com.google.common.base.Stopwatch;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 
 public class FlickrRetriever implements PlaceService {
@@ -48,13 +49,10 @@ public class FlickrRetriever implements PlaceService {
 			// kick out places without a location
 			places = Collections2.filter(places, new Place.HasLocation());
 			
-			//FIXME check license and location before extracting pics
-			
 			return places;
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -75,12 +73,10 @@ public class FlickrRetriever implements PlaceService {
 
 	@Override
 	public Collection<Place> getPlacesInArea(Double latBL, Double lngBL, Double latTR, Double lngTR) {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections2.filter(getAllPlaces(),new Place.IsInArea(latBL, lngBL, latTR, lngTR));
 	}
 	
 	private static String loadPictureUrl(Place place, String picSize) {
-
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("http://www.flickr.com/photos/");
@@ -121,13 +117,8 @@ public class FlickrRetriever implements PlaceService {
 			
 			// load pics only if this place is actually valid (costly operation)
 			if (place.hasCompatibleLicense() && place.hasLocation()) {
-				// FIXME remove stopwatch
-				Stopwatch stopwatch = new Stopwatch();
-				stopwatch.start();
 				place.pictureUrl = loadPictureUrl(place, "m");
 				place.thumbnailUrl = loadPictureUrl(place, "t");
-				stopwatch.stop();
-				System.out.println("pics: " + stopwatch);
 			}
 
 			return place;

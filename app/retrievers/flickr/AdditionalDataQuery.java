@@ -33,9 +33,6 @@ public class AdditionalDataQuery extends FlickrQuery {
 	public void load() {
 		Document doc;
 		try {
-			// FIXME remove stopwatch
-			Stopwatch stopwatch = new Stopwatch();
-			stopwatch.start();
 			doc = Jsoup.connect(makeRequestUrl()).get();
 
 			Elements photos = doc.select("photo");
@@ -53,10 +50,6 @@ public class AdditionalDataQuery extends FlickrQuery {
 				place.latitude = Double.valueOf(location.attr("latitude"));
 				place.longitude = Double.valueOf(location.attr("longitude"));
 			}
-			
-			stopwatch.stop();
-			System.out.println("additional data loaded: " + stopwatch);
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
