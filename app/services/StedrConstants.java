@@ -7,6 +7,7 @@ public class StedrConstants {
 	
 	public static final String STEDR_GROUP_ID = "2297124%40N25"; // escaped
 	
-	//access_token=623771306.1fb234f.09aa9355cc8e469f8839d18385f719d5 
+	// this access token belongs to: knut.nerga@gmail.com
+	public static final String INSTAGRAM_ACCESS_TOKEN = "623771306.1fb234f.09aa9355cc8e469f8839d18385f719d5"; 
 
 }

@@ -13,6 +13,9 @@ import services.PlaceService;
 
 public class PlaceController extends Controller {
 
+	/**
+	 * @return JSON file with all the places listed.
+	 */
 	public static Result listAllPlaces() {
 		PlaceService placeService = new FlickrRetriever();
 		Collection<Place> allPlaces = placeService.getAllPlaces();
@@ -24,6 +27,9 @@ public class PlaceController extends Controller {
 		return ok(Json.toJson(allPlaces));
 	}
 
+	/**
+	 * @return JSON file with all the places in a rectangle area defined by bottom-left and top-right corner on a map.
+	 */
 	public static Result listPlacesInArea(Double latBL, Double lngBL, Double latTR, Double lngTR) {
 		PlaceService placeService = new FlickrRetriever();
 		Collection<Place> places = placeService.getPlacesInArea(latBL, lngBL, latTR, lngTR);

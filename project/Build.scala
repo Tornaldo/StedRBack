@@ -15,6 +15,8 @@ object ApplicationBuild extends Build {
     javaJdbc,
     javaEbean,
     "com.google.guava" % "guava" % "14.0",
+    "com.google.code.gson" % "gson" % "2.2",
+    "commons-io" % "commons-io" % "2.3",
     "org.jsoup" % "jsoup" % "1.6.3"
   )
 

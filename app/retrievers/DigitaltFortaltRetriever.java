@@ -59,12 +59,12 @@ public class DigitaltFortaltRetriever implements StoryService {
 
 					// save ingress
 					if (field.tagName().equals("abm:introduction")) {
-						story.title = story.title + field.ownText() + " ";
+						story.ingress = story.title + field.ownText() + " ";
 					}
 
 					// save fortelling
 					if (field.tagName().equals("dc:description")) {
-						story.title = field.ownText();
+						story.fortelling = field.ownText();
 					}
 
 					// pictures and videos

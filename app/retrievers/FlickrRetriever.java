@@ -60,18 +60,6 @@ public class FlickrRetriever implements PlaceService {
 	}
 
 	@Override
-	public Place findPlaceById(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Collection<Place> getPlacesInRadius(Double lat, Double lng, Double radius) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Collection<Place> getPlacesInArea(Double latBL, Double lngBL, Double latTR, Double lngTR) {
 		return Collections2.filter(getAllPlaces(),new Place.IsInArea(latBL, lngBL, latTR, lngTR));
 	}

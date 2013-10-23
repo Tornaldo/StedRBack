@@ -32,7 +32,6 @@ public class Place {
 			return false;
 		}
 
-		// FIXME license checks
 		if (this.license == 0) {
 			return false;
 		}
