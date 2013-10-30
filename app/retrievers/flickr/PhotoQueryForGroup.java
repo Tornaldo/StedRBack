@@ -33,27 +33,11 @@ public class PhotoQueryForGroup extends FlickrQuery {
 	
 	public Collection<Place> getPlaces() throws IOException {
 		Document doc = Jsoup.connect(makeRequestUrl()).get();
-		Elements photos = doc.select("photo");
+		Elements photoElements = doc.select("photo");
 		
-		return Collections2.transform(photos, new Function<Element, Place>() {
-
-			@Override
-			public Place apply(Element element) {
-				Long dateAddedUnixTimestamp = Long.valueOf(element.attr("dateadded"));
-
-				Place place = new Place();
-
-				place.id = element.attr("id");
-				place.title = element.attr("title");
-				place.owner = element.attr("owner");
-				place.ownerName = element.attr("ownername");
-				place.dateAdded = new Date(TimeUnit.SECONDS.toMillis(dateAddedUnixTimestamp));
-				
-				return place;
-			}
-		});
+		// returns elements mapped onto places
+		return Collections2.transform(photoElements, photoElementToPlaceMapping);
 	}
-	
 	
 	@Override
 	protected String getMethodName() {
@@ -65,4 +49,20 @@ public class PhotoQueryForGroup extends FlickrQuery {
 		addParameter("group_id", groupId);
 		addParameter("per_page", PAGE_SIZE);
 	}
+	
+	private static Function<Element, Place> photoElementToPlaceMapping = new Function<Element, Place>() {
+		@Override
+		public Place apply(Element element) {
+			Long dateAddedUnixTimestamp = Long.valueOf(element.attr("dateadded"));
+
+			Place place = new Place();
+			place.id = element.attr("id");
+			place.title = element.attr("title");
+			place.owner = element.attr("owner");
+			place.ownerName = element.attr("ownername");
+			place.dateAdded = new Date(TimeUnit.SECONDS.toMillis(dateAddedUnixTimestamp));
+			
+			return place;
+		}
+	};
 }

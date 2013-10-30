@@ -25,17 +25,16 @@ public class HttpUtils {
 	 */
 	public static String getDocument(String url) {
 		DefaultHttpClient client = new DefaultHttpClient();
-
 		HttpGet getRequest = new HttpGet(url);
 
 		try {
-
 			HttpResponse getResponse = client.execute(getRequest);
 			final int statusCode = getResponse.getStatusLine().getStatusCode();
 
 			if (statusCode != HttpStatus.SC_OK) {
 				return null;
 			}
+			
 			HttpEntity getResponseEntity = getResponse.getEntity();
 
 			StringWriter writer = new StringWriter();

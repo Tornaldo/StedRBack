@@ -2,14 +2,12 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Walls
+# Places
 GET /places.json                controllers.PlaceController.listAllPlaces()
-
 GET /places_in_area.json        controllers.PlaceController.listPlacesInArea(startLatitude: Double, startLongitude: Double, stopLatitude: Double, stopLongitude: Double)
 
 # Stories
 GET /stories.json               controllers.StoryController.listStoriesForPlace(placeId: String)
-
 GET /stories_in_radius.json     controllers.StoryController.listStoriesForPlaceInRadius(placeId: String, radius: Double)
 
 # Images

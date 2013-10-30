@@ -13,18 +13,18 @@ import models.Story;
 public interface StoryService {
 	
 	/**
-	 * Queries Story Service with location and returns retrieved stories. Works with default radius.
-	 * @param place
-	 * @return collection of stories for this place
+	 * Queries Story Service with location of the place and returns retrieved stories. Works with default radius.
+	 * @param place Place to look up the stories for.
+	 * @return Collection of stories.
 	 */
 	public Collection<Story> getStoriesForPlace(Place place);
 	
 	
 	/**
-	 * Queries Story Service with location and returns retrieved stories. Works with specified radius.
-	 * @param place
-	 * @param radius which stories should be retrieved from within
-	 * @return collection of stories for this place
+	 * Queries Story Service with location of the place and returns retrieved stories. Works with specified radius.
+	 * @param place Place to look up the stories for.
+	 * @param radius Radius from which stories should be retrieved within.
+	 * @return Collection of stories.
 	 */
 	public Collection<Story> getStoriesForPlace(Place place, Double radius);
 

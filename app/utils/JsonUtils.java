@@ -7,6 +7,7 @@ import com.google.gson.JsonElement;
 
 /**
  * Utility class implementing some convenience methods to work with JSON.
+ * 
  * @author Simon Stastny
  *
  */

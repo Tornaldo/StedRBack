@@ -6,21 +6,25 @@ import models.Place;
 
 /**
  * @author Simon Stastny
- *
+ * 
  */
 public interface PlaceService {
-	
+
 	/**
-	 * @return all places
+	 * Returns all the places in the PlaceService.
+	 * 
+	 * @return Collection of places.
 	 */
 	Collection<Place> getAllPlaces();
-		
+
 	/**
+	 * Returns all stories in the specified area.
+	 * 
 	 * @param latBL minimal latitude
 	 * @param lngBL minimal longitude
 	 * @param latTR maximal latitude
 	 * @param lngTR maximal longitude
-	 * @return all stories in specified area
+	 * @return Collection of stories.
 	 */
 	Collection<Place> getPlacesInArea(Double latBL, Double lngBL, Double latTR, Double lngTR);
 }
