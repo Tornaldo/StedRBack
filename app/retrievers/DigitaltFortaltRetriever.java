@@ -2,20 +2,20 @@ package retrievers;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
+import models.Place;
+import models.Story;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import services.StoryService;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-
-import services.StoryService;
-import models.Story;
-import models.Place;
 
 /**
  * Implementation of StoryService using DigitaltFortalt.
@@ -37,6 +37,7 @@ public class DigitaltFortaltRetriever implements StoryService {
 		}
 
 		try {
+			// build request url to query DF
 			StringBuffer sb = new StringBuffer();
 			sb.append("http://kulturnett2.delving.org/organizations/kulturnett/api/search?");
 			sb.append("query=*:*&");
@@ -46,7 +47,7 @@ public class DigitaltFortaltRetriever implements StoryService {
 			sb.append("rows=").append(DEFAULT_ROWS).append("&");;
 			sb.append("qf=abm_contentProvider_facet:Digitalt+fortalt");
 			
-			// build request and get the response
+			// get the response
 			Document doc = Jsoup.connect(sb.toString()).get();
 
 			// find items
