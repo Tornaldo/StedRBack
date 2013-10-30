@@ -32,7 +32,7 @@ public class FlickrRetriever implements PlaceService {
 	
 	private static Cache<String, Place> placeCache = CacheBuilder.newBuilder()
 			.expireAfterWrite(1, TimeUnit.HOURS)
-			.maximumSize(2000)
+			.maximumSize(2000) // number of items
 			.build();
 	
 	@Override
@@ -70,7 +70,6 @@ public class FlickrRetriever implements PlaceService {
 	
 	private static String loadPictureUrl(Place place, String picSize) {
 		StringBuffer sb = new StringBuffer();
-
 		sb.append("http://www.flickr.com/photos/");
 		sb.append(place.owner);
 		sb.append("/");
@@ -107,7 +106,7 @@ public class FlickrRetriever implements PlaceService {
 			// load license and location
 			new AdditionalDataQuery(place).load();
 			
-			// load pics only if this place is actually valid (costly operation)
+			// load pics only if this place is actually valid (this is a costly operation)
 			if (place.hasCompatibleLicense() && place.hasLocation()) {
 				place.pictureUrl = loadPictureUrl(place, "m");
 				place.thumbnailUrl = loadPictureUrl(place, "t");
