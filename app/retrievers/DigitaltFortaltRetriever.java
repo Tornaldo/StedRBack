@@ -37,15 +37,17 @@ public class DigitaltFortaltRetriever implements StoryService {
 		}
 
 		try {
+			StringBuffer sb = new StringBuffer();
+			sb.append("http://kulturnett2.delving.org/organizations/kulturnett/api/search?");
+			sb.append("query=*:*&");
+			sb.append("pt=").append(place.latitude).append(",").append(place.longitude).append("&");
+			sb.append("d=").append(radius).append("&");
+			sb.append("format=xml&");
+			sb.append("rows=").append(DEFAULT_ROWS).append("&");;
+			sb.append("qf=abm_contentProvider_facet:Digitalt+fortalt");
+			
 			// build request and get the response
-			Document doc = Jsoup.connect("" 
-					+ "http://kulturnett2.delving.org/organizations/kulturnett/api/search?" 
-					+ "query=*:*&" 
-					+ "pt=" + place.latitude + "," + place.longitude + "&" 
-					+ "d=" + radius + "&" 
-					+ "format=xml&" 
-					+ "rows=" + DEFAULT_ROWS + "&" 
-					+ "qf=abm_contentProvider_facet:Digitalt+fortalt").get();
+			Document doc = Jsoup.connect(sb.toString()).get();
 
 			// find items
 			Elements storyItems = doc.select("item");
@@ -68,6 +70,8 @@ public class DigitaltFortaltRetriever implements StoryService {
 		@Override
 		public Story apply(Element item) {
 			Story story = new Story();
+			story.ingress = "";
+
 			List<String> pictures = new ArrayList<String>();
 			List<String> videos = new ArrayList<String>();
 			List<String> tags = new ArrayList<String>();
@@ -84,7 +88,7 @@ public class DigitaltFortaltRetriever implements StoryService {
 
 				// save ingress
 				if (field.tagName().equals("abm:introduction")) {
-					story.ingress = story.title + field.ownText() + " ";
+					story.ingress = story.ingress + field.ownText() + " ";
 				}
 
 				// save fortelling
