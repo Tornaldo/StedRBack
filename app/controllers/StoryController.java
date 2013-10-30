@@ -21,8 +21,8 @@ public class StoryController extends Controller {
 	/**
 	 * Finds all stories associated with this place according to the story server. Works with default radius.
 	 * 
-	 * @param placeId Id of the place to find the stories for.
-	 * @return JSON file with stories
+	 * @param placeId Id of the place to look up the stories for.
+	 * @return JSON file with stories.
 	 */
 	public static Result listStoriesForPlace(String placeId) {
 		return listStoriesForPlaceInRadius(placeId, null);
@@ -31,9 +31,9 @@ public class StoryController extends Controller {
 	/**
 	 * Finds all stories associated with this place according to the story server. Works with explicit radius.
 	 * 
-	 * @param placeId Id of the place to find the stories for.
-	 * @param radius Radius around the place to look for the stories around.
-	 * @return JSON file with stories
+	 * @param placeId Id of the place to look up the stories for.
+	 * @param radius Radius from which stories should be retrieved within.
+	 * @return JSON file with stories.
 	 */
 	public static Result listStoriesForPlaceInRadius(String placeId, Double radius) {
 		StoryService storyService = new DigitaltFortaltRetriever(); // using DigitaltFortalt as a story service

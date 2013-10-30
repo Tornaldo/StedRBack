@@ -10,7 +10,11 @@ import models.Image;
  *
  */
 public interface ImageService {
-	
+	/**
+	 *  Find all photos associated with this tag.
+	 * @param tag Tag to find photos for.
+	 * @return Collection of photos.
+	 */
 	public Collection<Image> getImagesForTag(String tag);
 
 }

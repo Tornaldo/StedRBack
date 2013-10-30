@@ -24,7 +24,7 @@ public interface PlaceService {
 	 * @param lngBL minimal longitude
 	 * @param latTR maximal latitude
 	 * @param lngTR maximal longitude
-	 * @return Collection of stories.
+	 * @return Collection of places.
 	 */
 	Collection<Place> getPlacesInArea(Double latBL, Double lngBL, Double latTR, Double lngTR);
 }

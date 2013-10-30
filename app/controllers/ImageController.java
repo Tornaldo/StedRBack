@@ -18,8 +18,8 @@ public class ImageController extends Controller {
 
 	/**
 	 * Find all photos associated with this tag in the ImageService used.
-	 * @param tag tag to find photos for
-	 * @return JSON file with images
+	 * @param tag Tag to find photos for.
+	 * @return JSON file with images.
 	 */
 	public static Result listImagesForTag(String tag) {
 		ImageService imageService = new InstagramRetriever(); // using instagram as the image service
