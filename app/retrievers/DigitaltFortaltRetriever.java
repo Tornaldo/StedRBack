@@ -89,7 +89,12 @@ public class DigitaltFortaltRetriever implements StoryService {
 
 				// save fortelling
 				if (field.tagName().equals("dc:description")) {
-					story.fortelling = field.ownText();
+					String raw = field.ownText();
+					
+					String clean = raw.replace("<p>", "\n<p>").replaceAll("\\<[^>]*>","");
+					
+					// this strips down HTML but also new lines: String clean = Jsoup.parse(raw).text();
+					story.fortelling = clean;
 				}
 
 				// pictures and videos
