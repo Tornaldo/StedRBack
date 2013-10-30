@@ -91,7 +91,7 @@ public class DigitaltFortaltRetriever implements StoryService {
 				if (field.tagName().equals("dc:description")) {
 					String raw = field.ownText();
 					
-					String clean = raw.replace("<p>", "\n<p>").replaceAll("\\<[^>]*>","");
+					String clean = raw.replace("</p>", "\n</p>").replaceAll("\\<[^>]*>","");
 					
 					// this strips down HTML but also new lines: String clean = Jsoup.parse(raw).text();
 					story.fortelling = clean;
