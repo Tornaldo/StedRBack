@@ -12,9 +12,15 @@ import services.StoryService;
 import models.Story;
 import models.Place;
 
+/**
+ * Implementation of StoryService using DigitaltFortalt.
+ * 
+ * @author Simon Stastny
+ * 
+ */
 public class DigitaltFortaltRetriever implements StoryService {
 
-	private static final double DEFAULT_RADIUS = 0.1d;
+	private static final double DEFAULT_RADIUS = 0.1d; // in kilometres
 	private static final int DEFAULT_ROWS = 500;
 
 	public List<Story> getStoriesForPlace(Place place, Double radius) {
@@ -28,6 +34,7 @@ public class DigitaltFortaltRetriever implements StoryService {
 		try {
 			List<Story> stories = new ArrayList<Story>();
 
+			// build request and get the response
 			Document doc = Jsoup.connect("" 
 					+ "http://kulturnett2.delving.org/organizations/kulturnett/api/search?" 
 					+ "query=*:*&" 
@@ -37,6 +44,7 @@ public class DigitaltFortaltRetriever implements StoryService {
 					+ "rows=" + DEFAULT_ROWS + "&" 
 					+ "qf=abm_contentProvider_facet:Digitalt+fortalt").get();
 
+			// find items
 			Elements items = doc.select("item");
 
 			// each element is a story

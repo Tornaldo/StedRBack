@@ -9,8 +9,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.google.common.base.Stopwatch;
-
 public class AdditionalDataQuery extends FlickrQuery {
 
 	private Place place;

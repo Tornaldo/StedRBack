@@ -1,99 +1,61 @@
 package retrievers;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
 import java.util.Collection;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import models.Image;
 import services.ImageService;
 import services.StedrConstants;
+import utils.HttpUtils;
+import utils.JsonUtils;
 
+import com.google.common.collect.Lists;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
+/**
+ * Implementation of ImageService using Instagram.
+ * 
+ * @author Simon Stastny
+ * 
+ */
 public class InstagramRetriever implements ImageService {
 
+	// base url for the instagram api
 	private static final String API_URL = "https://api.instagram.com/v1/";
 
+	// method name for retrieving photos for tags
 	private static final String TAG_METHOD_NAME = "tags/%s/media/recent";
 
 	@Override
 	public Collection<Image> getImagesForTag(String tag) {
-		try {
+		Collection<Image> images = Lists.newArrayList();
 
-			Collection<Image> images = Lists.newArrayList();
-			
-			StringBuilder urlBuilder = new StringBuilder();
+		// build url for the api call
+		StringBuilder urlBuilder = new StringBuilder();
+		urlBuilder.append(API_URL);
+		urlBuilder.append(String.format(TAG_METHOD_NAME, tag));
+		urlBuilder.append("?access_token=").append(StedrConstants.INSTAGRAM_ACCESS_TOKEN);
 
-			urlBuilder.append(API_URL);
-			urlBuilder.append(String.format(TAG_METHOD_NAME, tag));
-			urlBuilder.append("?access_token=").append(StedrConstants.INSTAGRAM_ACCESS_TOKEN);
+		// get response from the api
+		String document = HttpUtils.getDocument(urlBuilder.toString());
 
-			InputStream is = retrieveStream(urlBuilder.toString());
+		// parse the response into JSON document
+		JsonParser jp = new JsonParser();
+		JsonElement jsonDocument = jp.parse(document);
 
-			StringWriter writer = new StringWriter();
-			IOUtils.copy(is, writer);
-			String jsonData = writer.toString();
+		// find data elements
+		JsonArray dataArray = JsonUtils.findNestedElement(jsonDocument, "data").getAsJsonArray();
 
-			JsonParser jp = new JsonParser();		
-			JsonElement element = jp.parse(jsonData);
-			
-			JsonObject asJsonObject = element.getAsJsonObject();
-			
-			JsonArray asJsonArray = asJsonObject.get("data").getAsJsonArray();
-			
-			for (JsonElement jsonElement : asJsonArray) {
-				Image image = new Image();
-				image.url = jsonElement.getAsJsonObject().get("images").getAsJsonObject().get("standard_resolution").getAsJsonObject().get("url").getAsString();
-				image.fullName = jsonElement.getAsJsonObject().get("user").getAsJsonObject().get("full_name").getAsString();
-				images.add(image);
-			}
-			
-			return images;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// TODO Auto-generated method stub
-		return null;
-	}
+		// iterate over and find info about images
+		for (JsonElement dataElement : dataArray) {
+			Image image = new Image();
+			image.url = JsonUtils.findNestedElement(dataElement, "images/standard_resolution/url").getAsString();
+			image.fullName = JsonUtils.findNestedElement(dataElement, "user/full_name").getAsString();
 
-	private InputStream retrieveStream(String url) {
-
-		DefaultHttpClient client = new DefaultHttpClient();
-
-		HttpGet getRequest = new HttpGet(url);
-
-		try {
-
-			HttpResponse getResponse = client.execute(getRequest);
-			final int statusCode = getResponse.getStatusLine().getStatusCode();
-
-			if (statusCode != HttpStatus.SC_OK) {
-				return null;
-			}
-			HttpEntity getResponseEntity = getResponse.getEntity();
-			return getResponseEntity.getContent();
-
-		} catch (IOException e) {
-			getRequest.abort();
+			images.add(image);
 		}
 
-		return null;
+		return images;
 	}
-
 }

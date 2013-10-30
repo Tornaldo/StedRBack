@@ -17,13 +17,17 @@ import retrievers.flickr.PhotoQueryForGroup;
 import services.PlaceService;
 import services.StedrConstants;
 
-import com.google.common.base.Stopwatch;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 
+/**
+ * Implementation of PlaceService using Flickr.
+ * 
+ * @author Simon Stastny
+ * 
+ */
 public class FlickrRetriever implements PlaceService {
 	
 	private static Cache<String, Place> placeCache = CacheBuilder.newBuilder()

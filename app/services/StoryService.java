@@ -13,7 +13,7 @@ import models.Story;
 public interface StoryService {
 	
 	/**
-	 * Queries Digitalt Fortalt with location and returns retrieved stories. Works with default radius.
+	 * Queries Story Service with location and returns retrieved stories. Works with default radius.
 	 * @param place
 	 * @return collection of stories for this place
 	 */
@@ -21,7 +21,7 @@ public interface StoryService {
 	
 	
 	/**
-	 * Queries Digitalt Fortalt with location and returns retrieved stories. Works with default radius.
+	 * Queries Story Service with location and returns retrieved stories. Works with specified radius.
 	 * @param place
 	 * @param radius which stories should be retrieved from within
 	 * @return collection of stories for this place
