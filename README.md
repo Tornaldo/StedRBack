@@ -132,3 +132,27 @@ Returns collection of stories like this:
             ]
         }
     ]
+
+
+### Images
+
+For getting images for a specified `tag`:
+
+    /images.json?tag=nidaros
+    
+Returns a collection of stories like this:
+
+    [
+        {
+            "fullName": "Bengt Persson",
+            "url": "http://distilleryimage9.s3.amazonaws.com/05ffa296426d11e3ac5c22000ae91269_8.jpg"
+        },
+        {
+            "fullName": "sheminbdille",
+            "url": "http://distilleryimage9.s3.amazonaws.com/df08ec16422a11e395a822000ae90d43_7.jpg"
+        },
+        {
+            "fullName": "mortensabo",
+            "url": "http://distilleryimage3.s3.amazonaws.com/f8b0334a41a311e3985c22000a1f9ad3_8.jpg"
+        }
+    ]
