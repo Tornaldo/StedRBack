@@ -52,7 +52,7 @@ import com.google.common.collect.Collections2;
  */
 public class DigitaltFortaltRetriever implements StoryService {
 
-	private static final double DEFAULT_RADIUS = 0.1d; // in kilometres
+	private static final double DEFAULT_RADIUS = 0.06d; // in kilometres
 	private static final int DEFAULT_ROWS = 500;
 
 	public Collection<Story> getStoriesForPlace(Place place, Double radius) {
