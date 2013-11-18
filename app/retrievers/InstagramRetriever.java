@@ -77,11 +77,11 @@ public class InstagramRetriever implements ImageService {
 		// iterate over and find info about images
 		for (JsonElement dataElement : dataArray) {
 			Image image = new Image();
-			image.url = JsonUtils.findNestedElement(dataElement, "images/standard_resolution/url").getAsString();
-			image.fullName = JsonUtils.findNestedElement(dataElement, "user/full_name").getAsString();
-			image.commentCount = JsonUtils.findNestedElement(dataElement, "comments/count").getAsInt();
-			image.likesCount = JsonUtils.findNestedElement(dataElement, "likes/count").getAsInt();
-			image.caption = JsonUtils.findNestedElement(dataElement, "caption/text").getAsString();
+			image.url = JsonUtils.findNestedElementAsString(dataElement, "images/standard_resolution/url");
+			image.fullName = JsonUtils.findNestedElementAsString(dataElement, "user/full_name");
+			image.commentCount = JsonUtils.findNestedElementAsInteger(dataElement, "comments/count");
+			image.likesCount = JsonUtils.findNestedElementAsInteger(dataElement, "likes/count");
+			image.caption = JsonUtils.findNestedElementAsString(dataElement, "caption/text");
 			image.tags = JsonUtils.findNestedStringCollection(dataElement, "tags/*");
 
 			images.add(image);

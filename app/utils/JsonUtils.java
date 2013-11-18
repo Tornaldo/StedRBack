@@ -35,53 +35,79 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 
 /**
  * Utility class implementing some convenience methods to work with JSON.
  * 
  * @author Simon Stastny
- *
+ * 
  */
 public class JsonUtils {
-	
+
 	/**
 	 * Method for convenient lookup of a nested JsonElement in a tree structure.
+	 * 
 	 * @param element element to search through
 	 * @param path path to the element we search for (separated by '/' like in a directory structure)
 	 * @return element on the specified path
 	 */
 	public static JsonElement findNestedElement(JsonElement element, String path) {
 		// inspect the path
-		List<String> wayDown = Arrays.asList(path.split("/")); 
-		
+		List<String> wayDown = Arrays.asList(path.split("/"));
+
 		// go down the rabbit hole
 		for (String item : wayDown) {
-			element = element.getAsJsonObject().get(item);
+			if (element == null || element instanceof JsonNull || element.getAsJsonObject() == null) {
+				return null;
+			} else {
+				element = element.getAsJsonObject().get(item);
+			}
 		}
-		
+
 		return element;
+	}
+	
+	public static String findNestedElementAsString(JsonElement element, String path) {
+		JsonElement found = findNestedElement(element, path);
+		
+		if(found == null) {
+			return null;
+		} else {
+			return found.getAsString();
+		}
+	}
+	
+	public static Integer findNestedElementAsInteger(JsonElement element, String path) {
+		JsonElement found = findNestedElement(element, path);
+		
+		if(found == null) {
+			return 0;
+		} else {
+			return found.getAsInt();
+		}
 	}
 
 	public static Collection<String> findNestedStringCollection(JsonElement element, String path) {
 		// inspect the path
-		List<String> wayDown = Arrays.asList(path.split("/")); 
-		
+		List<String> wayDown = Arrays.asList(path.split("/"));
+
 		Collection<String> found = Lists.newArrayList();
-		
+
 		// go down the rabbit hole
 		for (String item : wayDown) {
-			if(item.contains("*")) {
+			if (item.contains("*")) {
 				JsonArray array = element.getAsJsonArray();
-				
-				for(int i = 0; i <array.size(); i++) {
+
+				for (int i = 0; i < array.size(); i++) {
 					found.add(array.get(i).getAsString());
 				}
 			} else {
 				element = element.getAsJsonObject().get(item);
 			}
 		}
-		
+
 		return found;
 	}
-	
+
 }
