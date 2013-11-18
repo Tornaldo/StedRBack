@@ -27,9 +27,19 @@
 
 package models;
 
+import java.util.Collection;
+
 public class Image {
 	
 	public String url;
 	
 	public String fullName;
+	
+	public Collection<String> tags;
+	
+	public Integer commentCount;
+	
+	public String caption;
+	
+	public Integer likesCount;
 }

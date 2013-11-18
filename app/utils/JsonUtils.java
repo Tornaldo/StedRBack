@@ -28,8 +28,12 @@
 package utils;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
 /**
@@ -58,4 +62,26 @@ public class JsonUtils {
 		return element;
 	}
 
+	public static Collection<String> findNestedStringCollection(JsonElement element, String path) {
+		// inspect the path
+		List<String> wayDown = Arrays.asList(path.split("/")); 
+		
+		Collection<String> found = Lists.newArrayList();
+		
+		// go down the rabbit hole
+		for (String item : wayDown) {
+			if(item.contains("*")) {
+				JsonArray array = element.getAsJsonArray();
+				
+				for(int i = 0; i <array.size(); i++) {
+					found.add(array.get(i).getAsString());
+				}
+			} else {
+				element = element.getAsJsonObject().get(item);
+			}
+		}
+		
+		return found;
+	}
+	
 }
